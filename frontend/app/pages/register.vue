@@ -1,8 +1,10 @@
 <script setup lang="ts">
 useHead({
-	title: 'Sign In - Acadex',
+	title: 'Sign Up - Acadex',
 });
 
+const firstname = ref('');
+const lastname = ref('');
 const email = ref('');
 const password = ref('');
 
@@ -12,10 +14,12 @@ if (userUUID.value) {
 	navigateTo('/');
 }
 
-const handleLogin = async () => {
-	const res = (await $fetch('/api/login', {
+const handleRegister = async () => {
+	const res = (await $fetch('/api/register', {
 		method: 'POST',
 		body: {
+			firstname: firstname.value,
+			lastname: lastname.value,
 			email: email.value,
 			password: password.value,
 		},
@@ -23,9 +27,23 @@ const handleLogin = async () => {
 		user: unknown;
 	};
 
+	console.log(res);
+
 	if (res.user) {
-		reloadNuxtApp();
-		navigateTo('/');
+		const login = (await $fetch('/api/login', {
+			method: 'POST',
+			body: {
+				email: email.value,
+				password: password.value,
+			},
+		})) as {
+			user: unknown;
+		};
+
+		if (login.user) {
+			reloadNuxtApp();
+			navigateTo('/');
+		}
 	}
 };
 </script>
@@ -40,14 +58,76 @@ const handleLogin = async () => {
 					class="inline-block text-4xl font-black text-gray-900 tracking-tighter mb-8 group">
 					Acadex<span class="text-blue-600 group-hover:text-black transition-colors">.</span>
 				</NuxtLink>
-				<h1 class="text-4xl font-black text-gray-900 tracking-tight mb-3">Welcome Back.</h1>
+				<h1 class="text-4xl font-black text-gray-900 tracking-tight mb-3">Sign up</h1>
 				<p class="text-gray-400 font-medium">Access the exclusive school marketplace.</p>
 			</header>
 
 			<!-- Login Card -->
 			<div
 				class="bg-white border border-gray-100 rounded-[2.5rem] p-10 md:p-12 shadow-2xl shadow-gray-100">
-				<form @submit.prevent="handleLogin" class="space-y-8">
+				<form @submit.prevent="handleRegister" class="space-y-8">
+					<div>
+						<label
+							class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-300 mb-4 block"
+							>First Name</label
+						>
+						<div class="relative">
+							<input
+								v-model="firstname"
+								type="text"
+								placeholder="John"
+								class="w-full bg-gray-50 border border-transparent rounded-2xl px-6 py-5 text-sm font-medium focus:bg-white focus:border-black/5 focus:ring-4 focus:ring-black/5 outline-none transition-all"
+								required />
+							<div class="absolute right-6 top-1/2 -translate-y-1/2">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="16"
+									height="16"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="3"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="text-gray-200">
+									<path
+										d="M22 17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.5C2 7 4 5 6.5 5H18c2.2 0 4 1.8 4 4v8Z" />
+									<path d="m22 7-10 7L2 7" />
+								</svg>
+							</div>
+						</div>
+					</div>
+					<div>
+						<label
+							class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-300 mb-4 block"
+							>Last Name</label
+						>
+						<div class="relative">
+							<input
+								v-model="lastname"
+								type="text"
+								placeholder="Doe"
+								class="w-full bg-gray-50 border border-transparent rounded-2xl px-6 py-5 text-sm font-medium focus:bg-white focus:border-black/5 focus:ring-4 focus:ring-black/5 outline-none transition-all"
+								required />
+							<div class="absolute right-6 top-1/2 -translate-y-1/2">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="16"
+									height="16"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="3"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="text-gray-200">
+									<path
+										d="M22 17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.5C2 7 4 5 6.5 5H18c2.2 0 4 1.8 4 4v8Z" />
+									<path d="m22 7-10 7L2 7" />
+								</svg>
+							</div>
+						</div>
+					</div>
 					<!-- Email Input -->
 					<div>
 						<label
@@ -122,18 +202,18 @@ const handleLogin = async () => {
 					<button
 						type="submit"
 						class="w-full py-6 bg-black text-white text-xs font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-gray-800 transition-all transform active:scale-[0.99] shadow-2xl shadow-black/10 mt-4">
-						Authenticate
+						Sign Up
 					</button>
 				</form>
 
 				<!-- Secondary Actions -->
 				<div class="mt-10 pt-10 border-t border-gray-50 text-center">
 					<p class="text-xs font-medium text-gray-400">
-						New to the community?
+						Already a member?
 						<NuxtLink
-							to="/register"
+							to="/login"
 							class="text-black font-black hover:underline underline-offset-4 decoration-2"
-							>Create Account</NuxtLink
+							>Log in</NuxtLink
 						>
 					</p>
 				</div>

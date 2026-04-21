@@ -21,4 +21,5 @@ useHead({
 <template>
 	<Navbar />
 	<slot />
+	<Footer />
 </template>
