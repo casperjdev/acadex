@@ -3,6 +3,12 @@ useHead({
 	title: 'Acadex',
 });
 
+const me = await $fetch('/api/me', {
+	method: 'GET',
+});
+
+const user = ref(me.user);
+
 const listings = ref([
 	{
 		id: '1',
@@ -18,9 +24,6 @@ const listings = ref([
 
 const filters = ref({ subject: '', category: '' });
 
-const uid = useCookie('user-uuid');
-console.log(uid.value);
-
 const marketplace = useMarketplace();
 
 const list = await marketplace.fetchListings();
@@ -33,7 +36,8 @@ const items = list.data;
 		<!-- Hero Section -->
 		<header class="mb-24 relative">
 			<div class="max-w-3xl">
-				<h1 class="text-[8rem] font-black text-gray-900 tracking-tighter leading-[0.8] mb-8">
+				<h1
+					class="md:text-[8rem] text-5xl font-black text-gray-900 tracking-tighter leading-[0.8] mb-8">
 					Acadex<span class="text-blue-600">.</span>
 				</h1>
 				<p class="text-2xl text-gray-400 font-medium leading-relaxed">
@@ -45,9 +49,9 @@ const items = list.data;
 			<!-- Quick Action Floating Button -->
 			<ClientOnly>
 				<NuxtLink
-					v-if="!uid"
+					v-if="!user"
 					to="/login"
-					class="absolute right-0 bottom-0 bg-black text-white px-10 py-6 rounded-[2rem] text-xs font-black uppercase tracking-[0.2em] hover:bg-gray-800 transition-all shadow-2xl shadow-black/10 flex items-center gap-3 group">
+					class="ml-auto w-max mt-8 right-0 bottom-0 bg-black text-white px-10 py-6 rounded-[2rem] text-xs font-black uppercase tracking-[0.2em] hover:bg-gray-800 transition-all shadow-2xl shadow-black/10 flex items-center gap-3 group">
 					<span>Start Selling</span>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -65,9 +69,9 @@ const items = list.data;
 					</svg>
 				</NuxtLink>
 				<NuxtLink
-					v-if="uid"
+					v-if="user"
 					to="/listings/create"
-					class="absolute right-0 bottom-0 bg-black text-white px-10 py-6 rounded-[2rem] text-xs font-black uppercase tracking-[0.2em] hover:bg-gray-800 transition-all shadow-2xl shadow-black/10 flex items-center gap-3 group">
+					class="ml-auto w-max mt-8 right-0 bottom-0 bg-black text-white px-10 py-6 rounded-[2rem] text-xs font-black uppercase tracking-[0.2em] hover:bg-gray-800 transition-all shadow-2xl shadow-black/10 flex items-center gap-3 group">
 					<span>Create Listing</span>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
