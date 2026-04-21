@@ -9,7 +9,4 @@ export default defineNuxtConfig({
 	vite: {
 		plugins: [tailwindcss()],
 	},
-	supabase: {
-		redirect: false, // We'll handle redirection manually or in middleware
-	},
 });
