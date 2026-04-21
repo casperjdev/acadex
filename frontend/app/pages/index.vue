@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const listings = ref([
-  { id: '1', title: 'Calculus Textbook', price: 50, category: 'TEXTBOOK', subject: 'Math', condition: 'USED' }
+  { id: '1', title: 'Calculus Textbook', price: 50, category: 'TEXTBOOK', subject: 'Math', condition: 'USED' },
+  { id: '2', title: 'Organic Chemistry Notes', price: 15, category: 'NOTES', subject: 'Science', condition: 'USED' },
+  { id: '3', title: 'Lab Safety Goggles', price: 10, category: 'EQUIPMENT', subject: 'Science', condition: 'NEW' }
 ]);
 const filters = ref({ subject: '', category: '' });
 </script>
