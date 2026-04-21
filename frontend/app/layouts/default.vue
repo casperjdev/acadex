@@ -19,5 +19,6 @@ useHead({
 </script>
 
 <template>
+	<Navbar />
 	<slot />
 </template>

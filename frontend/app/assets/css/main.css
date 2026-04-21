@@ -5,6 +5,7 @@
 	font-optical-sizing: auto;
 	font-weight: 200;
 	font-style: normal;
+	background-color: var(--color-cyan-50);
 	font-variation-settings:
 		'slnt' 0,
 		'wdth' 100,
